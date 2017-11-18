@@ -76,71 +76,99 @@ raw_input('Press Enter to continue...')
 # A row key is a unique ID for each entity in the partition
 # These two properties are used as a primary key to index the Table. This makes queries much quicker.
 
-pizza = Entity()
-pizza.PartitionKey = 'pizzamenu'
-pizza.RowKey = '001'
-pizza.description = 'Pepperoni'
-pizza.cost = 18
-table_service.insert_entity('itemstable', pizza)
-print('Created entry for pepperoni...')
+car = Entity()
+car.PartitionKey = 'carmenu'
+car.RowKey = '001'
+car.make = 'Toyota'
+car.model = 'Avalon'
+car.year = 2017
+car.color = 'Blue'
+car.cost = 35000
+table_service.insert_entity('itemstable', car)
+print('Created entry for Toyota Avalon...')
 
-pizza = Entity()
-pizza.PartitionKey = 'pizzamenu'
-pizza.RowKey = '002'
-pizza.description = 'Veggie'
-pizza.cost = 15
-table_service.insert_entity('itemstable', pizza)
-print('Created entry for veggie...')
+car = Entity()
+car.PartitionKey = 'carmenu'
+car.RowKey = '002'
+car.make = 'Toyota'
+car.model = 'Corolla'
+car.year = 2017
+car.color = 'White'
+car.cost = 18000
+table_service.insert_entity('itemstable', car)
+print('Created entry for Toyota Corolla...')
 
-pizza = Entity()
-pizza.PartitionKey = 'pizzamenu'
-pizza.RowKey = '003'
-pizza.description = 'Hawaiian'
-pizza.cost = 12
-table_service.insert_entity('itemstable', pizza)
-print('Created entry for Hawaiian...\n')
+car = Entity()
+car.PartitionKey = 'carmenu'
+car.RowKey = '003'
+car.make = 'Honda'
+car.model = 'Accord'
+car.year = 2017
+car.color = 'Red'
+car.cost = 25000
+table_service.insert_entity('itemstable', car)
+print('Created entry for Honda Accord...\n')
 
 # A partition key tracks how like-minded entries in the Table are created and queried.
 # A row key is a unique ID for each entity in the partition
 # These two properties are used as a primary key to index the Table. This makes queries much quicker.
 
-clothing = Entity()
-clothing.PartitionKey = 'clothingstore'
-clothing.RowKey = '005'
-clothing.sku = 'BLK203123'
-clothing.item = 'sweater'
-clothing.cost = 22.99
-table_service.insert_entity('itemstable', clothing)
-print('Created entry for a Sweater...\n')
+
+coffee = Entity()
+coffee.PartitionKey = 'coffeestore'
+coffee.RowKey = '006'
+coffee.brand = 'Star bucks'
+coffee.flavor = 'dark'
+coffee.size = 'small'
+coffee.cost = 1.5
+table_service.insert_entity('itemstable', coffee)
+print('Created entry for Star bucks dark small...\n')
 time.sleep(1)
 
-clothing = Entity()
-clothing.PartitionKey = 'clothingstore'
-clothing.RowKey = '006'
-clothing.sku = 'BLK203143'
-clothing.item = 'jeans'
-clothing.cost = 55.99
-table_service.insert_entity('itemstable', clothing)
-print('Created entry for Jeans...\n')
+coffee = Entity()
+coffee.PartitionKey = 'coffeestore'
+coffee.RowKey = '007'
+coffee.brand = 'Star bucks'
+coffee.flavor = 'sweet'
+coffee.size = 'medium'
+coffee.cost = 2.5
+table_service.insert_entity('itemstable', coffee)
+print('Created entry for Star bucks sweet medium...\n')
+time.sleep(1)
+
+coffee = Entity()
+coffee.PartitionKey = 'coffeestore'
+coffee.RowKey = '008'
+coffee.brand = 'Peets'
+coffee.flavor = 'Extra dark'
+coffee.size = 'Large'
+coffee.cost = 3.5
+table_service.insert_entity('itemstable', coffee)
+print('Created entry for Peets extra dark large...\n')
 time.sleep(1)
 
 ###
 # Use the Azure Storage Storage SDK for Python to query for entities in our Table
 ###
-print('With some data in our Azure Storage Table, we can query the data.\nLet\'s see what the pizza menu looks like.')
+print('With some data in our Azure Storage Table, we can query the data.\nLet\'s see what the car menu looks like.')
 raw_input('Press Enter to continue...')
 
 # In this query, you define the partition key to search within, and then which properties to retrieve
 # Structuring queries like this improves performance as your application scales up and keeps the queries efficient
-items = table_service.query_entities('itemstable', filter="PartitionKey eq 'pizzamenu'", select='description,cost')
+items = table_service.query_entities('itemstable', filter="PartitionKey eq 'carmenu'", select='description,cost')
 for item in items:
-    print('Name: ' + str(item.description))
+    print('Make: ' + str(item.make))
+    print('Model: ' + str(item.model))
+    print('Year: ' + str(item.year))
+    print('color: ' + str(item.color))
     print('Price: ' + str(item.cost) + '\n')
 
 
-items = table_service.query_entities('itemstable', filter="PartitionKey eq 'clothingstore'", select='description,price')
+items = table_service.query_entities('itemstable', filter="PartitionKey eq 'coffeestore'", select='description,price')
 for item in items:
-    print('Name: ' + str(item.description))
+    print('Brand: ' + str(item.brand))
+    print('Flavor: ' + str(item.flavor))
+    print('Size: ' + str(item.size))
     print('Price: ' + str(item.price) + '\n')
 
 time.sleep(1)
