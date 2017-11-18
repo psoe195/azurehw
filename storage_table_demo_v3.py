@@ -164,12 +164,12 @@ for item in items:
     print('Price: ' + str(item.cost) + '\n')
 
 
-items = table_service.query_entities('itemstable', filter="PartitionKey eq 'coffeestore'", select='brand,flavor,size,price')
+items = table_service.query_entities('itemstable', filter="PartitionKey eq 'coffeestore'", select='brand,flavor,size,cost')
 for item in items:
     print('Brand: ' + str(item.brand))
     print('Flavor: ' + str(item.flavor))
     print('Size: ' + str(item.size))
-    print('Price: ' + str(item.price) + '\n')
+    print('Price: ' + str(item.cost) + '\n')
 
 time.sleep(1)
 
